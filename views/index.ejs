@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 
+        heading 1 
+        create a list
+        for loop, to list all the items
+        each item has a class of item
+        if item is completed, 
+            add item with a class of completed
+        if not,
+            add item
+        trash
+    -->
+    <h1>Todo List: </h1>
+<ul class="todoItems">
+    <% for(let i=0; i < items.length; i++) {%>
+        <li class="item">
+
+            <% if(items[i].completed === true) {%>
+                <form action="/markUncomplete/<%= items[i]._id %>?_method=PUT" method="POST">
+                    <button class='completed'><%= items[i].thing %></button>
+                </form>
+            <% }else{ %>
+                <form action="/markComplete/<%= items[i]._id %>?_method=PUT" method="POST">
+                    <button class=''><%= items[i].thing %></button>
+                </form>
+            <% } %>
+            
+            <form action="/deleteItem/<%= items[i]._id %>?_method=DELETE" method="POST">
+                <button class="fa fa-minus" type="submit"></button>
+            </form>
+            
+            <span class='fa fa-plus'></span>
+                <div id="secondaryForm<%= i %>" class="hidden">
+                    <form action="/<%= items[i]._id %>/secondaryAddTodo" method="POST">
+                        <input type="text" placeholder="Thing To Do" name="secondaryTodoItem">
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
+
+
+
+            <!-- list within a list -->  
+            <ul class="secondaryTodoItems">
+                <% for(let j=0; j < secondaryItems.length; j++) {%>
+                    <% if ( secondaryItems[j].listID.equals(items[i]._id) == true ) {%>
+                        <%console.log( secondaryItems[j].listID.equals(items[i]._id) )%>
+                        <%console.log( (secondaryItems[j].listID === items[i]._id) )%>
+                        <li class="item">
+                            <% if(secondaryItems[j].completed === true) {%>
+                                <form action="/markUncomplete/<%= secondaryItems[j]._id %>?_method=PUT" method="POST">
+                                    <button class='completed'><%= secondaryItems[j].thing %></button>
+                                </form>
+                            <% }else{ %>
+                                <form action="/markComplete/<%= secondaryItems[j]._id %>?_method=PUT" method="POST">
+                                    <button class=''><%= secondaryItems[j].thing %></button>
+                                </form>
+                            <% } %>
+                    
+                            <form action="/deleteItem/<%= secondaryItems[j]._id %>?_method=DELETE" method="POST">
+                                <button class="fa fa-minus" type="submit"></button>
+                            </form>
+                        </li>
+
+                    <% } %>
+                <% } %>
+            </ul>
+            <!-- list within a list ends -->
+
+
+        </li>
+    <% } %>
+</ul>
+
+    <!-- heading 2 with number of items that are have not been completed -->
+    <h2>Left to do: <%= left %></h2>
+
+    <!-- heading 2 -->
+    <h2>Add A Todo:</h2>
+
+    <!--
+        FORM that has a create/post method with the route of addTodo
+        a text input section
+        submit button
+    -->
+    <form action="/addTodo" method="POST">
+        <input type="text" placeholder="Thing To Do" name="todoItem">
+        <input type="submit">
+    </form>
+
+<!-- client side JavaScript -->
+    <script src='js/main.js'></script>
+</body>
+</html>

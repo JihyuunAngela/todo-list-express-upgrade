@@ -1,0 +1,21 @@
+/* Colour all heading 1 elements red */
+h1{
+    color: red;
+}
+/* Colour all completed classes grey with a line-through */
+.completed{
+    color: gray;
+    text-decoration: line-through;
+}
+
+.hidden {
+    display: none;
+}
+.shown {
+    display: block;
+}
+form, button {
+    display: inline-block;
+    background: white;
+    border: 0;
+}
